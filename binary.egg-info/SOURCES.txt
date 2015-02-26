@@ -1,0 +1,11 @@
+setup.cfg
+setup.py
+binary/__init__.py
+binary/cli.py
+binary.egg-info/PKG-INFO
+binary.egg-info/SOURCES.txt
+binary.egg-info/dependency_links.txt
+binary.egg-info/entry_points.txt
+binary.egg-info/not-zip-safe
+binary.egg-info/requires.txt
+binary.egg-info/top_level.txt
