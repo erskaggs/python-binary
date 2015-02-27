@@ -6,6 +6,7 @@ CLI tool for artifactory interaction.
 
 Simply run:
 
+    $ cd python-binary
     $ pip install .
 
 # Usage
