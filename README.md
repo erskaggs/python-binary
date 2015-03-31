@@ -15,6 +15,8 @@ password = <your password>
 url = <artifcatory_url>
 ```
 
+You can copy the config template to ~/.artifactory.cfg then update that cfg file to your settings
+
 # Installation
 
 Simply run:
