@@ -21,6 +21,7 @@ You can copy the config template to ~/.artifactory.cfg then update that cfg file
 
 Simply run:
 
+    $ cd python-binary
     $ pip install .
 
 # Usage
