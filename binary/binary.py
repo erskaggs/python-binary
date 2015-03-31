@@ -1,30 +1,46 @@
 import click
 import requests
+import os
+import sys
+import errno
+import ConfigParser
 
-URL = '<INSERT URL OF UR ARTIFACTORY INSTANCE'
-repos = URL+'/api/repositories'
+repos = '/api/repositories'
 all_repos = '[?type=repositoryType (local|remote)]'
-location = 'None'
-input = 'None'
-img = 'None'
+location = 'NONE'
+input = 'NONE'
+img = 'NONE'
+
+default_config_path = '~/.artifactory.cfg'
+config_path = os.path.expanduser(default_config_path)
+
+config = ConfigParser.ConfigParser()
+config.read(config_path)
+username = config.get('artifactory', 'username')
+password = config.get('artifactory', 'password')
+url = config.get('artifactory', 'url')
 
 def cmd_all():
-    r = requests.get(repos, params=all_repos)
+    r = requests.get(url+repos, auth=(username, password), params=all_repos)
     print(r.text)
 
 def cmd_upload():
     with open(input, 'rb') as fh:
-      r = requests.put(URL+location+'/'+img, data=fh)
+      r = requests.put(url+'/'+location+'/'+img, auth=(username, password), data=fh)
     print(r.content)
 
 def cmd_dnld():
-    r = requests.get(URL+location+'/'+input, stream=True)
+    r = requests.get(url+'/'+location+'/'+input, auth=(username, password), stream=True)
     with open(input, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)
                 f.flush()
     return input
+
+def cmd_del():
+    r = requests.delete(url+'/'+location+'/'+input, auth=(username, password))
+    print(r.text)
 
 @click.group()
 @click.version_option()
@@ -58,6 +74,16 @@ def cli_dnld(repo,artifact):
     global input
     input = artifact
     cmd_dnld()
+
+@cli.command('delete')
+@click.option('--repo','-r',help='Name of repository')
+@click.option('--artifact','-a',help='Name of artifact you want to delete')
+def cli_del(repo,artifact):
+    global location
+    location = repo
+    global input
+    input = artifact
+    cmd_del()
 
 if __name__ == '__main__':
    cli()
