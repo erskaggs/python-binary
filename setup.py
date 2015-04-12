@@ -6,7 +6,7 @@ setup(
     license='BSD',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
-    install_requires=['click','requests'],
+    install_requires=['click', 'requests', 'pytest'],
     entry_points={
         'console_scripts': [
             'binary = binary.binary:cli',
