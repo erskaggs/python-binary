@@ -1,5 +1,7 @@
 # binary
 
+[![Travis CI] https://travis-ci.org/erskaggs/python-binary.svg?branch=master
+
 CLI tool for artifactory interaction.
 
 ## Global Configuration File ##
